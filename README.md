@@ -4,7 +4,7 @@ This search don't use git to switch versions. You can check arbitrary options fo
 
 ## install
 ```
-pip install bisect_find_first_bad
+pip install bisect-find-first-bad
 ```
 
 
