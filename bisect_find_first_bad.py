@@ -8,7 +8,7 @@ if sys.version_info >= (3, 10):
     bisect_left = bisect.bisect_left
 else:
     # hardcode fallback
-    # https://github.com/python/cpython/blob/3.10/Lib/bisect.py#L68-99
+    # https://github.com/python/cpython/blob/3.10/Lib/bisect.py#L68-L99
     # https://github.com/python/cpython/pull/20556
     def bisect_left(a, x, lo=0, hi=None, *, key=None):
         """Return the index where to insert item x in list a, assuming a is sorted.
@@ -53,8 +53,8 @@ class BisectFindFirstBad(abc.ABC):
 
     def _is_bad(self, op: Any) -> bool:
         """
-        False/0 means good/old
-        True/1 means bad/new
+        False/0 means good/old/left
+        True/1 means bad/new/right
         """
         print(op, 'start')
         is_bad = self.is_bad(op)
@@ -79,4 +79,4 @@ class BisectFindFirstBad(abc.ABC):
             print('=' * 100)
             print(f'first bad option is: {a[i]}')
             return a[i]
-        raise ValueError
+        raise ValueError('all options are bad')

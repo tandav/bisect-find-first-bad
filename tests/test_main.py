@@ -1,3 +1,4 @@
+import pytest
 import subprocess
 from bisect_find_first_bad import BisectFindFirstBad
 
@@ -16,3 +17,9 @@ class FirstGreaterThan3(BisectFindFirstBad):
 def test_main():
     first_greater_than_3 = FirstGreaterThan3(options=(1, 2, 3, 4, 5, 6))
     assert first_greater_than_3() == 4
+
+
+def test_all_bad():
+    first_greater_than_3 = FirstGreaterThan3(options=(0, 1, 2, 3))
+    with pytest.raises(ValueError):
+        assert first_greater_than_3()
