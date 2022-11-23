@@ -4,7 +4,7 @@ import sys
 from typing import Any
 from typing import Sequence
 
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 
 if sys.version_info >= (3, 10):
     bisect_left = bisect.bisect_left
