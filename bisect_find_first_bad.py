@@ -1,8 +1,10 @@
-import bisect
 import abc
-from typing import Any, Sequence
+import bisect
 import sys
+from typing import Any
+from typing import Sequence
 
+__version__ = '0.0.2'
 
 if sys.version_info >= (3, 10):
     bisect_left = bisect.bisect_left
@@ -43,13 +45,24 @@ else:
 
 
 class color:
-    RED       = lambda s: '\033[31m' + str(s) + '\033[0m'
-    GREEN     = lambda s: '\033[32m' + str(s) + '\033[0m'
+    @staticmethod
+    def RED(s: str) -> str:
+        return '\033[31m' + str(s) + '\033[0m'
+
+    @staticmethod
+    def GREEN(s: str) -> str:
+        return '\033[32m' + str(s) + '\033[0m'
 
 
 class BisectFindFirstBad(abc.ABC):
     def __init__(self, options: Sequence[Any]):
         self.options = options
+        if not (hasattr(self, 'is_bad') ^ hasattr(self, 'is_good')):
+            raise ValueError('must define either is_bad or is_good')
+        if hasattr(self, 'is_good'):
+            self.is_bad_func = lambda op: not self.is_good(op)
+        elif hasattr(self, 'is_bad'):
+            self.is_bad_func = self.is_bad
 
     def _is_bad(self, op: Any) -> bool:
         """
@@ -57,26 +70,22 @@ class BisectFindFirstBad(abc.ABC):
         True/1 means bad/new/right
         """
         print(op, 'start')
-        is_bad = self.is_bad(op)
+        is_bad = self.is_bad_func(op)
         if is_bad:
             print(color.RED(f'{op}: BAD'))
         else:
             print(color.GREEN(f'{op}: GOOD'))
         return is_bad
 
-    @abc.abstractmethod
-    def is_bad(sel, op: Any) -> bool: ...
-
-    def __call__(self):
+    def __call__(self) -> Any:
         """
         https://docs.python.org/3/library/bisect.html#searching-sorted-lists
         Locate the leftmost value exactly equal to x
         """
-        a = self.options
         x = True  # True means bad
-        i = bisect_left(a, x, key=self._is_bad)
-        if i != len(a) and self.is_bad(a[i]) == x:
+        i = bisect_left(self.options, x, key=self._is_bad)
+        if i != len(self.options) and self.is_bad_func(self.options[i]) == x:
             print('=' * 100)
-            print(f'first bad option is: {a[i]}')
-            return a[i]
+            print(f'first bad option is: {self.options[i]}')
+            return self.options[i]
         raise ValueError('all options are bad')

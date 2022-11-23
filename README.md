@@ -1,5 +1,5 @@
 # bisect_find_first_bad
-[`git bisect run`](https://git-scm.com/docs/git-bisect#_bisect_run) can only search through commits.  
+[`git bisect run`](https://git-scm.com/docs/git-bisect#_bisect_run) can only search through commits.
 This search don't use git to switch versions. You can check arbitrary options for `is_bad`.
 
 ## install
@@ -9,10 +9,9 @@ pip install bisect-find-first-bad
 
 
 ## usage
-you should subclass from `BisectFindFirstBad` and implement 1 required method `is_bad`.
-This method should return `True/False` which indicates is option good or bad.  
+you should subclass from `BisectFindFirstBad` and implement 1 method `is_bad` or `is_good`.
+This method should return `True/False` which indicates is option good or bad.
 When instantiating your class you should provide a sequence of options to check. They should be sorted by `is_bad`. Left side of options are good options and on the right are bad ones.
-
 
 
 ## simple example
@@ -22,6 +21,11 @@ from bisect_find_first_bad import BisectFindFirstBad
 class FirstGreaterThan3(BisectFindFirstBad):
     def is_bad(self, op) -> bool:
         return op > 3
+
+# or you can use is_good:
+class FirstGreaterThan3(BisectFindFirstBad):
+    def is_good(self, op) -> bool:
+        return op <= 3
 
 first_greater_than_3 = FirstGreaterThan3(options = (1, 2, 3, 4, 5, 6))
 ```
@@ -46,7 +50,7 @@ first bad option is: 4
 ```
 
 
-## more complex example - find first bad version of poetry dependency 
+## more complex example - find first bad version of poetry dependency
 ```py
 import subprocess
 from bisect_find_first_bad import BisectFindFirstBad
@@ -55,7 +59,7 @@ class FirstBadDependencyVersion(BisectFindFirstBad):
     def is_bad(self, op) -> bool:
         # kinda setup
         subprocess.check_call(f'git checkout HEAD -- poetry.lock pyproject.toml && poetry add "my_library=={op}"', shell=True)
-    
+
         # check is_bad
         return bool(subprocess.run('make test', shell=True).returncode)
 
