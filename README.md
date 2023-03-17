@@ -1,4 +1,4 @@
-# bisect_find_first_bad
+# bisect-find-first-bad
 [`git bisect run`](https://git-scm.com/docs/git-bisect#_bisect_run) can only search through commits.
 This search don't use git to switch versions. You can check arbitrary options for `is_bad`.
 
@@ -6,7 +6,6 @@ This search don't use git to switch versions. You can check arbitrary options fo
 ```
 pip install bisect-find-first-bad
 ```
-
 
 ## usage
 you should subclass from `BisectFindFirstBad` and implement 1 method `is_bad` or `is_good`.
