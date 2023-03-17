@@ -1,8 +1,7 @@
-import abc
 import bisect
 import sys
+from collections.abc import Sequence
 from typing import Any
-from typing import Sequence
 
 __version__ = '0.0.3'
 
@@ -54,10 +53,10 @@ class color:
         return '\033[32m' + str(s) + '\033[0m'
 
 
-class BisectFindFirstBad(abc.ABC):
+class BisectFindFirstBad:
     def __init__(self, options: Sequence[Any]):
         self.options = options
-        if not (hasattr(self, 'is_bad') ^ hasattr(self, 'is_good')):
+        if not hasattr(self, 'is_bad') ^ hasattr(self, 'is_good'):
             raise ValueError('must define either is_bad or is_good')
         if hasattr(self, 'is_good'):
             self.is_bad_func = lambda op: not self.is_good(op)

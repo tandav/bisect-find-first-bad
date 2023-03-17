@@ -4,12 +4,12 @@ from bisect_find_first_bad import BisectFindFirstBad
 
 
 class FirstGreaterThan3IsBad(BisectFindFirstBad):
-    def is_bad(sel, op) -> bool:
+    def is_bad(self, op) -> bool:
         return op > 3
 
 
 class FirstGreaterThan3IsGood(BisectFindFirstBad):
-    def is_good(sel, op) -> bool:
+    def is_good(self, op) -> bool:
         return op <= 3
 
 
