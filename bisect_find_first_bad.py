@@ -1,7 +1,7 @@
 import bisect
 import sys
-from collections.abc import Sequence
 from typing import Any
+from typing import Sequence
 
 __version__ = '0.0.3'
 
