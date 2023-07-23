@@ -1,10 +1,10 @@
 [project]
-name = "bisect-find-first-bad"
+name = "bisectlib"
 version = "0.0.4"
 authors = [
     {name = "Alexander Rodionov", email = "tandav@tandav.me"},
 ]
-description = "tool like `git bisect run` but checks arbitrary options and not uses git to switch versions"
+description = "array bisection algorithm helper"
 readme = "README.md"
 requires-python = ">=3.8"
 dependencies = []
