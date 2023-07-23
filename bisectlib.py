@@ -53,9 +53,14 @@ class color:
         return '\033[32m' + str(s) + '\033[0m'
 
 
-class BisectFindFirstBad:
-    def __init__(self, options: Sequence[Any]):
-        self.options = options
+class Bisect:
+    def __init__(self, options: Sequence[Any], sort_order: str = 'good-bad'):
+        if sort_order == 'good-bad':
+            self.options = options
+        elif sort_order == 'bad-good':
+            self.options = options[::-1]
+        else:
+            raise ValueError("sort_order must be 'good-bad' or 'bad-good'")
         if not hasattr(self, 'is_bad') ^ hasattr(self, 'is_good'):
             raise ValueError('must define either is_bad or is_good')
         if hasattr(self, 'is_good'):
