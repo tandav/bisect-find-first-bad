@@ -17,9 +17,9 @@ dev = [
 ]
 
 [project.urls]
-source = "https://github.com/tandav/bisect-find-first-bad"
-issues = "https://github.com/tandav/bisect-find-first-bad/issues"
-"release notes" = "https://github.com/tandav/bisect-find-first-bad/releases"
+source = "https://github.com/tandav/bisectlib"
+issues = "https://github.com/tandav/bisectlib/issues"
+"release notes" = "https://github.com/tandav/bisectlib/releases"
 
 # ==============================================================================
 
