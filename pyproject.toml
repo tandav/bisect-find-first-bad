@@ -41,7 +41,7 @@ tag = true
     '^version = "{pep440_version}"',
     '^current_version = "{version}"',
 ]
-"bisect_find_first_bad.py" = [
+"bisectlib.py" = [
     "^__version__ = '{pep440_version}'",
 ]
 
